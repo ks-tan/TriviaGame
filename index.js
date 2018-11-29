@@ -43,9 +43,9 @@ io.on("connection", function(socket) {
     let triviaObjectAnswer = _.find(currentTriviaObject.answers, (o) => {return o.answer === answer});
     if (triviaObjectAnswer === undefined) {
       currentTriviaObject.answers.push({answer: answer, clients: [socket.name]});
-    } else if (_.find(triviaObjectAnswer.clients, (s) => {s === socket.name}) === undefined){
+    } else if (_.find(triviaObjectAnswer.clients, (s) => {return s === socket.name}) === undefined){
       triviaObjectAnswer.clients.push(socket.name);
     }
-    socket.emit("onAnswerSubmitted", {answers: currentTriviaObject.answers});
+    io.sockets.emit("onAnswerSubmitted", {answers: currentTriviaObject.answers});
   });
 });

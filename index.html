@@ -32,7 +32,7 @@
     socket.on('onNewQuestion', function (data) {
       container.innerHTML =
       '<h4>' + data.triviaObject.q + '</h4>' +
-      '<form id="answerInputForm" action="javascript:submitAnswer();">' +
+      '<form id="answerInputForm" action="javascript:submitAnswerFromFormInput();">' +
         'Enter your answer: <input type="text" name="answerInputText" id="answerInputText"> <br>' +
         '<input type="submit" value="Submit">' +
       '</form>' +
@@ -43,7 +43,7 @@
       }
     });
 
-    function submitAnswer() {
+    function submitAnswerFromFormInput() {
       const answer = document.getElementById('answerInputText').value;
       socket.emit('onSubmitAnswer', {answer: answer});
     }
@@ -63,6 +63,7 @@
         answersDiv.appendChild(answerDiv);
         const answerButton = document.createElement('button');
         answerButton.innerHTML = answerData.answer
+        answerButton.addEventListener("click", function(){socket.emit('onSubmitAnswer', {answer: answerData.answer})});
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
           const clientDiv = document.createElement('div');
