@@ -7,7 +7,6 @@ const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
 
-let clientsData = [];
 let currentQuestionNumber = 0;
 const triviaData = [
   { q: "What is KS's favourite food?", a: "French Fries" }, 
@@ -30,15 +29,23 @@ io.on("connection", function(socket) {
   const serverMessage = {message: "Welcome to Trivia Game!"};
   socket.emit("onConnection", serverMessage);
 
-  socket.on("disconnect", () => {
-    _.remove(clientsData, (data) => {return data.socketId === socket.id;});
+  socket.on("onClientRegister", (data) => {
+    socket.name = data.clientName;
+    socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
   });
 
-  socket.on("onClientRegister", (data) => {
-    //Only update `clientsData` if the client's `sockedId` is already recorded
-    if (_.find(clientsData, (client) => {return client.socketId === socket.id}) === undefined) { 
-      clientsData.push({socketId: socket.id, name: data.clientName});
-      socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+  socket.on("onSubmitAnswer", (data) => {
+    const answer = data.answer;
+    let currentTriviaObject = triviaData[currentQuestionNumber];
+    if (currentTriviaObject.answers === undefined) {
+      currentTriviaObject.answers = [];
     }
-  })
+    let triviaObjectAnswer = _.find(currentTriviaObject.answers, (o) => {return o.answer === answer});
+    if (triviaObjectAnswer === undefined) {
+      currentTriviaObject.answers.push({answer: answer, clients: [socket.name]});
+    } else if (_.find(triviaObjectAnswer.clients, (s) => {s === socket.name}) === undefined){
+      triviaObjectAnswer.clients.push(socket.name);
+    }
+    socket.emit("onAnswerSubmitted", {answers: currentTriviaObject.answers});
+  });
 });
