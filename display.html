@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Trivia Game</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+
+  <body>
+    <div id = "container"></div>
+  </body>
+
+  <script>
+    const socket = io.connect('http://localhost:5000');
+    let container =  document.getElementById('container');
+
+    socket.on('onConnection', function (data) {
+      socket.emit('onClientRegister', {clientName: 'admin'});
+    });
+
+    socket.on('onNewQuestion', function (data) {
+      container.innerHTML =
+      '<h4>' + data.triviaObject.q + '</h4>' +
+      '<div id="answers"></div>';
+      if (data.triviaObject.answers !== undefined) {
+        appendAnswers(data.triviaObject.answers);
+      }
+    });
+
+    socket.on('onAnswerSubmitted', function (data) {
+      appendAnswers(data.answers);
+    });
+
+    function appendAnswers(answers) {
+      const answersDiv = document.querySelector('#answers');
+      answersDiv.innerHTML = "";
+      for (let i = 0; i < answers.length; i++) {
+        answerData = answers[i];
+        const answerDiv = document.createElement('div');
+        answersDiv.appendChild(answerDiv);
+        const answerButton = document.createElement('button');
+        answerButton.innerHTML = answerData.answer
+        answerButton.addEventListener("click", function(){socket.emit('onSubmitAnswer', {answer: answerData.answer})});
+        answerDiv.appendChild(answerButton);
+        for (let j = 0; j < answerData.clients.length; j++) {
+          const clientDiv = document.createElement('div');
+          clientDiv.innerHTML = answerData.clients[j];
+          answerDiv.appendChild(clientDiv);
+        }
+      }
+    }
+  </script>
+
+</html>
