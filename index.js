@@ -25,13 +25,21 @@ app.get("/display", function(req, res) {
   res.sendFile(__dirname + "/display.html");
 });
 
+app.get("/admin", function(req, res) {
+  res.sendFile(__dirname + "/admin.html");
+});
+
 io.on("connection", function(socket) {
   const serverMessage = {message: "Welcome to Trivia Game!"};
   socket.emit("onConnection", serverMessage);
 
   socket.on("onClientRegister", (data) => {
     socket.name = data.clientName;
-    socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+    if (data.clientName === "admin") {
+      socket.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
+    } else {
+      socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+    }
   });
 
   socket.on("onSubmitAnswer", (data) => {

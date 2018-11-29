@@ -16,7 +16,7 @@
     let container =  document.getElementById('container');
 
     socket.on('onConnection', function (data) {
-      socket.emit('onClientRegister', {clientName: 'admin'});
+      socket.emit('onClientRegister', {clientName: 'display'});
     });
 
     socket.on('onNewQuestion', function (data) {
