@@ -33,7 +33,7 @@ app.get("/admin", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-  const serverMessage = {message: "Welcome to Trivia Game!"};
+  const serverMessage = {message: "Welcome to Antioch CG Gathering!"};
   socket.emit("onConnection", serverMessage);
 
   socket.on("onClientRegister", (data) => {

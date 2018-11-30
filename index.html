@@ -5,10 +5,15 @@
   <head>
     <title>Trivia Game</title>
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
 
   <body>
-    <div id = "container"></div>
+    <div id = "title">Antioch Trivia!</div>
+    <div id = "main-content">
+      <div id = "container"></div>
+    </div>
   </body>
 
   <script>
@@ -17,9 +22,9 @@
 
     socket.on('onConnection', function (data) {
       container.innerHTML +=
-        '<h4>' + data.message + '</h4>' + 
-        '<form action="javascript:clientReigster();">' +
-          'Enter your name: <input type="text" name="clientName" id="clientNameRegister"> <br>' +
+        '<div id="welcomeMessage">' + data.message + '</div>' + 
+        '<form id="nameForm" action="javascript:clientReigster();">' +
+          'Enter your name: <br> <input type="text" name="clientName" id="clientNameRegister"> <br>' +
           '<input type="submit" value="Submit">' +
         '</form>';
     });
@@ -31,13 +36,15 @@
 
     socket.on('onNewQuestion', function (data) {
       container.innerHTML =
-      '<h4>' + data.triviaObject.q + '</h4>' +
+      '<div id="question">' + data.triviaObject.q + '</div>' +
       '<form id="answerInputForm" action="javascript:submitAnswerFromFormInput();">' +
-        'Enter your answer: <input type="text" name="answerInputText" id="answerInputText"> <br>' +
+        'Enter your answer: <br> <input type="text" name="answerInputText" id="answerInputText"> <br>' +
         '<input type="submit" value="Submit">' +
       '</form>' +
-      'You can select an answer from below: ' + 
-      '<div id="answers"></div>';
+      '<div id="answersContainer">' +
+        'You can select an answer from below: ' + 
+        '<div id="answers"></div>' +
+      '</div>';
       if (data.triviaObject.answers !== undefined) {
         appendAnswers(data.triviaObject.answers);
       }
@@ -60,13 +67,16 @@
       for (let i = 0; i < answers.length; i++) {
         answerData = answers[i];
         const answerDiv = document.createElement('div');
+        answerDiv.id = "answerDiv";
         answersDiv.appendChild(answerDiv);
         const answerButton = document.createElement('button');
+        answerButton.id = "answerButton";
         answerButton.innerHTML = answerData.answer
         answerButton.addEventListener("click", function(){socket.emit('onSubmitAnswer', {answer: answerData.answer})});
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
           const clientDiv = document.createElement('div');
+          clientDiv.id = "answerClient";
           clientDiv.innerHTML = answerData.clients[j];
           answerDiv.appendChild(clientDiv);
         }

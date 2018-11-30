@@ -1,0 +1,53 @@
+#welcomeMessage {
+  font-size: 50px;
+  margin-top: 50px;
+}
+#nameForm {
+  font-size: 50px;
+  margin: 100px;
+}
+#clientNameRegister {
+  font-size: 50px;
+  margin: 50px;
+}
+
+#container #question {
+  font-size: 100px;
+}
+
+#answerInputForm {
+  font-size: 50px;
+  margin: 100px;
+}
+#answerInputText {
+  font-size: 50px;
+  margin: 50px;
+  border: none;
+  border-bottom: 2px solid white;
+}
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #F9A420;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 50px;
+}
+
+#answersContainer {
+  margin: 50px;
+  margin-top: 150px;
+  font-size: 50px;
+}
+#container #answerDiv {
+  margin: 30px;
+}
+#container #answerButton {
+  font-size: 50px;
+}
+#container #answerClient {
+  font-size: 30px;
+}
