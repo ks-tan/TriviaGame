@@ -8,10 +8,11 @@ const server = http.Server(app);
 const io = socketIO(server);
 
 let currentQuestionNumber = 0;
-const triviaData = [
+let triviaData = [
   { q: "What is KS's favourite food?", a: "French Fries" }, 
   { q: "What is Lois's new favourite game?", a: "Smash Bros" }
 ];
+let points = [];
 
 server.listen(process.env.PORT || 5000, function () {
   console.log("Server started on port 5000");
@@ -65,6 +66,32 @@ io.on("connection", function(socket) {
   });
 
   socket.on("onSelectAnswer", (data) => {
-    //TODO
-  })
+    const clientList = _.find(triviaData[currentQuestionNumber].answers, (o) => {return o.answer === data.answer}).clients;
+    for (let i = 0; i < clientList.length; i++) {
+      const newPoint = i === 0 ? 2 : 1;
+      const currName = clientList[i];
+      let pointData = _.find(points, (o) => {return o.name === currName});
+      if (pointData === undefined) {
+        points.push({name: currName, point: newPoint});
+      } else {
+        pointData.point += newPoint;
+      }
+    }
+    io.sockets.emit("onUpdatePoints", {points: points});
+  });
+
+  socket.on("onClearData", () => {
+    points = [];
+    currentQuestionNumber = 0;
+    for (let i = 0; i < triviaData.length; i++) {
+      triviaData[i].answers = [];
+    }
+    io.sockets.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
+    io.sockets.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+    io.sockets.emit("onUpdatePoints", {points: points});
+  });
+
+  socket.on("onEndGame", () => {
+    io.sockets.emit("onGameEnded", {points: points});
+  });
 });
