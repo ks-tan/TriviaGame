@@ -9,8 +9,16 @@ const io = socketIO(server);
 
 let currentQuestionNumber = 0;
 let triviaData = [
-  { q: "What is KS's favourite food?", a: "French Fries" }, 
-  { q: "What is Lois's new favourite game?", a: "Smash Bros" }
+  { q: "Where was Solomon’s temple located?", a: "On the side of his head." }, 
+  { q: "Why couldn’t Jonah trust the ocean?", a: "Because he knew there was something fishy about it." },
+  { q: "What kind of man was Boaz before he married Ruth?", a: "He was Ruthless." },
+  { q: "What is the best way to study the Bible?", a: "You Luke into it." },
+  { q: "Why didn’t they play cards on the Ark?", a: "Because Noah was standing on the deck." },
+  { q: "How does Moses make his coffee?", a: "Hebrews it." },
+  { q: "How do we know Peter was a rich fisherman?", a: "By his net income." },
+  { q: "Who was the smartest man in the Bible?", a: "Abraham. He knew a Lot" },
+  { q: "Who was the fastest runner in the race?", a: "Adam, because he was first in the human race." },
+  { q: "What animal could Noah not trust?", a: "Cheetah" }
 ];
 let points = [];
 
