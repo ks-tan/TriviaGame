@@ -55,10 +55,16 @@ io.on("connection", function(socket) {
       triviaObjectAnswer.clients.push(socket.name);
     }
     io.sockets.emit("onAnswerSubmitted", {answers: currentTriviaObject.answers});
+    io.sockets.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
   });
 
   socket.on("onChangeQuestionNumber", (data) => {
     currentQuestionNumber = data.questionNumber;
     io.sockets.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+    socket.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
   });
+
+  socket.on("onSelectAnswer", (data) => {
+    //TODO
+  })
 });

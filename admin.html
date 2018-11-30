@@ -22,7 +22,13 @@
     socket.on('onUpdateAdmin', function (data) {
       const numberOfQuestions = data.triviaData.length;
       const currentQuestion = data.currentQuestionNumber;
-      container.innerHTML = "";
+      container.innerHTML =
+        "Current question: " + currentQuestion +
+        '<h4>' + data.triviaData[currentQuestion].q + '</h4>' +
+        '<div id="answers"></div>';
+      if (data.triviaData[currentQuestion].answers !== undefined) {
+        appendAnswers(data.triviaData[currentQuestion].answers);
+      }
       const questionsDiv = document.createElement('div');
       container.appendChild(questionsDiv);
       for (let i = 0; i < numberOfQuestions; i++) {
@@ -33,8 +39,23 @@
       }
     });
 
-    function selectAnswer() {
-      //todo
+    function appendAnswers(answers) {
+      const answersDiv = document.querySelector('#answers');
+      answersDiv.innerHTML = "";
+      for (let i = 0; i < answers.length; i++) {
+        answerData = answers[i];
+        const answerDiv = document.createElement('div');
+        answersDiv.appendChild(answerDiv);
+        const answerButton = document.createElement('button');
+        answerButton.innerHTML = answerData.answer
+        answerButton.addEventListener("click", function(){socket.emit('onSelectAnswer', {answer: answerData.answer})});
+        answerDiv.appendChild(answerButton);
+        for (let j = 0; j < answerData.clients.length; j++) {
+          const clientDiv = document.createElement('div');
+          clientDiv.innerHTML = answerData.clients[j];
+          answerDiv.appendChild(clientDiv);
+        }
+      }
     }
 
     function clearData() {
