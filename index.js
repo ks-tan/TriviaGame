@@ -107,6 +107,7 @@ io.on("connection", function(socket) {
     io.sockets.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
     io.sockets.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
     io.sockets.emit("onUpdatePoints", {points: points});
+    io.sockets.emit("onConnection", serverMessage);
   });
 
   socket.on("onEndGame", () => {
