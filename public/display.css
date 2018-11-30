@@ -27,3 +27,11 @@
   color: #F9A420;
   background-color: #380027;
 }
+
+#winnersTitle {
+  color: #F9A420;
+  font-size: 75px;
+}
+#winnerName {
+  font-size: 50px; 
+}

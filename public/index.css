@@ -51,3 +51,11 @@ input[type=button], input[type=submit], input[type=reset] {
 #container #answerClient {
   font-size: 30px;
 }
+
+#winnersTitle {
+  color: #F9A420;
+  font-size: 100px;
+}
+#winnerName {
+  font-size: 50px;
+}

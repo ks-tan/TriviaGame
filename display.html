@@ -74,31 +74,31 @@
         tdDiv2.innerHTML = points[i].point;
         trDiv.appendChild(tdDiv2);
       }
+    });
 
-      socket.on('onShowAnswer', function(data) {
-        const answer = data.answer;
-        container.innerHTML = "<div id='answerIs'>The answer is: </div> <br> <div id='answerReveal'>" + answer + "</div>";
-      });
+    socket.on('onShowAnswer', function(data) {
+      const answer = data.answer;
+      container.innerHTML = "<div id='answerIs'>The answer is: </div> <br> <div id='answerReveal'>" + answer + "</div>";
+    });
 
-      socket.on('onGameEnded', function(data) {
-        const points = data.points;
-        let winners = [];
-        let highestScore = 0;
-        for (let i = 0; i < points.length; i++) {
-          if (points[i].point > highestScore) {
-            highestScore = points[i].point;
-          }
+    socket.on('onGameEnded', function(data) {
+      const points = data.points;
+      let winners = [];
+      let highestScore = 0;
+      for (let i = 0; i < points.length; i++) {
+        if (points[i].point > highestScore) {
+          highestScore = points[i].point;
         }
-        for (let i = 0; i < points.length; i++) {
-          if (points[i].point === highestScore) {
-            winners.push(points[i].name);
-          }
+      }
+      for (let i = 0; i < points.length; i++) {
+        if (points[i].point === highestScore) {
+          winners.push(points[i].name);
         }
-        container.innerHTML = "Winners! <br>"
-        for (let i = 0; i < winners.length; i++) {
-          container.innerHTML += "<h2>"+ winners[i] +"</h2>";
-        }
-      });
+      }
+      container.innerHTML = "<div id='winnersTitle'>Winners!</div> <br>"
+      for (let i = 0; i < winners.length; i++) {
+        container.innerHTML += "<div id='winnerName'>"+ winners[i] +"</div>";
+      }
     });
   </script>
 
