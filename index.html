@@ -21,7 +21,7 @@
     let container =  document.getElementById('container');
 
     socket.on('onConnection', function (data) {
-      container.innerHTML +=
+      container.innerHTML =
         '<div id="welcomeMessage">' + data.message + '</div>' + 
         '<form id="nameForm" action="javascript:clientReigster();">' +
           'Enter your name: <br> <input type="text" name="clientName" id="clientNameRegister"> <br>' +
