@@ -53,7 +53,10 @@
         answersDiv.appendChild(answerDiv);
         const answerButton = document.createElement('button');
         answerButton.innerHTML = answerData.answer
-        answerButton.addEventListener("click", function(){socket.emit('onSelectAnswer', {answer: answerData.answer})});
+        answerButton.addEventListener("click", function(){
+          socket.emit('onSelectAnswer', {answer: answerData.answer})
+          answerDiv.style.backgroundColor = "yellow";
+        });
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
           const clientDiv = document.createElement('div');
