@@ -8,6 +8,10 @@
   </head>
 
   <body>
+    <div id = "settings">
+      <button onclick="clearData()">New Game</button>
+      <button onclick="endGame()">End Game</button>
+    </div>
     <div id = "container"></div>
   </body>
 
@@ -59,11 +63,11 @@
     }
 
     function clearData() {
-      //todo
+      socket.emit('onClearData');
     }
     
     function endGame() {
-      //todo
+      socket.emit('onEndGame');
     }
 
   </script>
