@@ -7,6 +7,10 @@
   grid-area: container;
 }
 
+#answerButton {
+  font-size: 25px;
+}
+
 #leaderboard {
   grid-area: leaderboard;
   background-color: #380027;

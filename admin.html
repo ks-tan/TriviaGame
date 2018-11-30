@@ -5,6 +5,8 @@
   <head>
     <title>Trivia Game</title>
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="admin.css" />
   </head>
 
   <body>
@@ -35,9 +37,12 @@
         appendAnswers(data.triviaData[currentQuestion].answers);
       }
       const questionsDiv = document.createElement('div');
+      questionsDiv.id = "questionsDiv";
+      questionsDiv.innerHTML = "Select question<br>"
       container.appendChild(questionsDiv);
       for (let i = 0; i < numberOfQuestions; i++) {
         const questionButton = document.createElement('button');
+        questionButton.id = "questionButton";
         questionButton.innerHTML = i;
         questionButton.addEventListener("click", function(){socket.emit('onChangeQuestionNumber', {questionNumber: i})});
         questionsDiv.appendChild(questionButton);
@@ -53,6 +58,7 @@
         answersDiv.appendChild(answerDiv);
         const answerButton = document.createElement('button');
         answerButton.innerHTML = answerData.answer
+        answerButton.id="answerButton";
         answerButton.addEventListener("click", function(){
           socket.emit('onSelectAnswer', {answer: answerData.answer})
           answerDiv.style.display = "none";
@@ -60,6 +66,7 @@
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
           const clientDiv = document.createElement('div');
+          clientDiv.id="answerClient";
           clientDiv.innerHTML = answerData.clients[j];
           answerDiv.appendChild(clientDiv);
         }
