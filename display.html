@@ -67,6 +67,11 @@
         tdDiv2.innerHTML = points[i].point;
         trDiv.appendChild(tdDiv2);
       }
+
+      socket.on('onShowAnswer', function(data) {
+        const answer = data.answer;
+        container.innerHTML = "The answer is: <br> <h1>" + answer + "</h1>";
+      });
     });
   </script>
 

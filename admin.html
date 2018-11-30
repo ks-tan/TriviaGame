@@ -9,6 +9,7 @@
 
   <body>
     <div id = "settings">
+      <button onclick="revealAnswer()">Reveal Answer</button>
       <button onclick="clearData()">New Game</button>
       <button onclick="endGame()">End Game</button>
     </div>
@@ -68,6 +69,10 @@
     
     function endGame() {
       socket.emit('onEndGame');
+    }
+
+    function revealAnswer() {
+      socket.emit('onRevealAnswer');
     }
 
   </script>

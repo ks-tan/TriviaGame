@@ -81,6 +81,11 @@ io.on("connection", function(socket) {
       }
     }
     io.sockets.emit("onUpdatePoints", {points: points});
+    io.sockets.emit("onShowAnswer", {answer: triviaData[currentQuestionNumber].a});
+  });
+
+  socket.on("onRevealAnswer", ()=> {
+    io.sockets.emit("onShowAnswer", {answer: triviaData[currentQuestionNumber].a});
   });
 
   socket.on("onClearData", () => {
