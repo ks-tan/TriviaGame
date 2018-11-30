@@ -5,11 +5,15 @@
   <head>
     <title>Trivia Game</title>
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="display.css" />
   </head>
 
   <body>
-    <div id = "container"></div>
-    <div id = "leaderboard"></div>
+    <div id = "title">Antioch Trivia!</div>
+    <div id = "main-content">
+      <div id = "container"></div>
+      <div id = "leaderboard"></div>  
+    </div>
   </body>
 
   <script>
@@ -22,7 +26,7 @@
 
     socket.on('onNewQuestion', function (data) {
       container.innerHTML =
-      '<h4>' + data.triviaObject.q + '</h4>' +
+      '<div id="question">' + data.triviaObject.q + '</div>' +
       '<div id="answers"></div>';
       if (data.triviaObject.answers !== undefined) {
         appendAnswers(data.triviaObject.answers);
@@ -41,11 +45,13 @@
         const answerDiv = document.createElement('div');
         answersDiv.appendChild(answerDiv);
         const answerButton = document.createElement('button');
-        answerButton.innerHTML = answerData.answer
+        answerButton.id = "answerButton";
+        answerButton.innerHTML = answerData.answer;
         answerButton.addEventListener("click", function(){socket.emit('onSubmitAnswer', {answer: answerData.answer})});
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
           const clientDiv = document.createElement('div');
+          clientDiv.id = "answerClient";
           clientDiv.innerHTML = answerData.clients[j];
           answerDiv.appendChild(clientDiv);
         }
@@ -70,7 +76,7 @@
 
       socket.on('onShowAnswer', function(data) {
         const answer = data.answer;
-        container.innerHTML = "The answer is: <br> <h1>" + answer + "</h1>";
+        container.innerHTML = "<div id='answerIs'>The answer is: </div> <br> <div id='answerReveal'>" + answer + "</div>";
       });
 
       socket.on('onGameEnded', function(data) {

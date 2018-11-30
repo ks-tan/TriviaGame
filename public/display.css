@@ -1,0 +1,97 @@
+body {
+  color: white;
+  font-family: '宋体', 宋体b8b体, Microsoft YaHei, Arial, sans-serif;
+  font-size: 15px;
+  height: 100%;
+  background-color: #260026;
+}
+
+#title {
+  font-family: 'Verdana, serif';
+  font-weight: bold;
+  font-size: 100px;
+  color: #F9A420;
+  text-align: center;
+  margin: 50px;
+  height: 150px;
+  -ms-transform: rotate(-3deg); /* IE 9 */
+  -webkit-transform: rotate(-3deg); /* Safari */
+  transform: rotate(-3deg);
+
+  -webkit-animation: backandforth 1.5s ease 0s;
+  -webkit-animation-iteration-count:infinite;
+  animation: backandforth 1.5s ease 0s;
+  animation-iteration-count:infinite;
+}
+
+
+@-webkit-keyframes backandforth {0%{font-size:90px;} 50%{font-size:100px;} 100%{font-size:90px;}}
+
+@keyframes backandforth {0%{font-size:90px;} 50%{font-size:100px;} 100%{font-size:90px;}}
+
+#main-content {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 66% 33%;
+  grid-template-areas: "container leaderboard";
+}
+
+#container {
+  grid-area: container;
+  text-align: center;
+  height: 100%;
+}
+#container #question {
+  font-size: 50px;
+  margin: 30px;
+}
+#container #answerButton {
+  background-color: #F9A420;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  border-radius: 8px;
+  margin: 10px;
+}
+#container #answerClient {
+  background-color: #639bff;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  margin: 5px;
+}
+#container #answerIs {
+  font-size: 25px;
+  margin: 20px;
+}
+#container #answerReveal {
+  font-size: 50px;
+  color: #F9A420;
+}
+
+#leaderboard {
+  grid-area: leaderboard;
+  background-color: #380027;
+  height: 100%;
+  text-align: center;
+  font-size: 25px;
+}
+#leaderboard table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+#leaderboard tr {
+  background-color: #663931;
+  width: 100%;
+}
+#leaderboard th {
+  color: #F9A420;
+  background-color: #380027;
+}
