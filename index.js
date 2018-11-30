@@ -40,6 +40,9 @@ io.on("connection", function(socket) {
       socket.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
     } else {
       socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+      if (data.clientName === "display") {
+        socket.emit("onUpdatePoints", {points: points});
+      }
     }
   });
 

@@ -9,6 +9,7 @@
 
   <body>
     <div id = "container"></div>
+    <div id = "leaderboard"></div>
   </body>
 
   <script>
@@ -50,6 +51,23 @@
         }
       }
     }
+
+    socket.on('onUpdatePoints', function (data) {
+      const points = data.points;
+      const leaderboardDiv = document.querySelector('#leaderboard');
+      leaderboardDiv.innerHTML = "<table id='table'><tr><th>Player</th><th>Points</th></tr></table>";
+      const tableDiv = document.querySelector('#table');
+      for (let i = 0; i < points.length; i++) {
+        const trDiv = document.createElement('tr');
+        tableDiv.appendChild(trDiv);
+        const tdDiv1 = document.createElement('td');
+        tdDiv1.innerHTML = points[i].name;
+        trDiv.appendChild(tdDiv1);
+        const tdDiv2 = document.createElement('td');
+        tdDiv2.innerHTML = points[i].point;
+        trDiv.appendChild(tdDiv2);
+      }
+    });
   </script>
 
 </html>
