@@ -23,12 +23,17 @@
       const numberOfQuestions = data.triviaData.length;
       const currentQuestion = data.currentQuestionNumber;
       container.innerHTML = "";
+      const questionsDiv = document.createElement('div');
+      container.appendChild(questionsDiv);
       for (let i = 0; i < numberOfQuestions; i++) {
-        //append buttons here
+        const questionButton = document.createElement('button');
+        questionButton.innerHTML = i;
+        questionButton.addEventListener("click", function(){socket.emit('onChangeQuestionNumber', {questionNumber: i})});
+        questionsDiv.appendChild(questionButton);
       }
     });
 
-    function changeQuestionNumber() {
+    function selectAnswer() {
       //todo
     }
 

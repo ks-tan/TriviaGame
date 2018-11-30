@@ -56,4 +56,9 @@ io.on("connection", function(socket) {
     }
     io.sockets.emit("onAnswerSubmitted", {answers: currentTriviaObject.answers});
   });
+
+  socket.on("onChangeQuestionNumber", (data) => {
+    currentQuestionNumber = data.questionNumber;
+    io.sockets.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
+  });
 });
