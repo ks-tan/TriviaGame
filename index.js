@@ -13,7 +13,7 @@ const triviaData = [
   { q: "What is Lois's new favourite game?", a: "Smash Bros" }
 ];
 
-server.listen(5000, function () {
+server.listen(process.env.PORT || 5000, function () {
   console.log("Server started on port 5000");
 })
 
