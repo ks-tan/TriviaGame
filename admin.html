@@ -55,7 +55,7 @@
         answerButton.innerHTML = answerData.answer
         answerButton.addEventListener("click", function(){
           socket.emit('onSelectAnswer', {answer: answerData.answer})
-          answerDiv.style.backgroundColor = "yellow";
+          answerDiv.style.display = "none";
         });
         answerDiv.appendChild(answerButton);
         for (let j = 0; j < answerData.clients.length; j++) {
