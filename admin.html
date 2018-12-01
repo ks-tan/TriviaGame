@@ -60,7 +60,7 @@
         answerButton.innerHTML = answerData.answer
         answerButton.id="answerButton";
         answerButton.addEventListener("click", function(){
-          socket.emit('onSelectAnswer', {answer: answerData.answer})
+          socket.emit('onSelectAnswer', {answer: answerButton.innerHTML});
           answerDiv.style.display = "none";
         });
         answerDiv.appendChild(answerButton);
