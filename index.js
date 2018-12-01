@@ -50,9 +50,13 @@ io.on("connection", function(socket) {
       socket.emit("onUpdateAdmin", {triviaData: triviaData, currentQuestionNumber: currentQuestionNumber});
     } else {
       socket.emit("onNewQuestion", {triviaObject: triviaData[currentQuestionNumber]});
-      if (data.clientName === "display") {
-        socket.emit("onUpdatePoints", {points: points});
+      if (data.clientName !== "display") {
+        const client = _.find(points, (o) => {return o.name === data.clientName});
+        if (client === undefined) {
+          points.push({name: data.clientName, point: 0});
+        }
       }
+      io.sockets.emit("onUpdatePoints", {points: points});
     }
   });
 
@@ -90,6 +94,7 @@ io.on("connection", function(socket) {
         pointData.point += newPoint;
       }
     }
+    points = _.orderBy(points, ['point'], ['desc']);
     io.sockets.emit("onUpdatePoints", {points: points});
     io.sockets.emit("onShowAnswer", {answer: triviaData[currentQuestionNumber].a});
   });
