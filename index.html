@@ -19,6 +19,7 @@
   <script>
     const socket = io();
     let container =  document.getElementById('container');
+    let myName = undefined;
 
     socket.on('onConnection', function (data) {
       container.innerHTML =
@@ -31,6 +32,7 @@
 
     function clientReigster() {
       const clientName = document.getElementById('clientNameRegister').value;
+      myName = clientName;
       socket.emit('onClientRegister', {clientName: clientName});
     }
 
@@ -56,8 +58,19 @@
     }
 
     socket.on('onAnswerSubmitted', function (data) {
-      const form = document.querySelector('#answerInputForm');
-      form.style.display = 'none';
+      let shouldHideInputForm = false;
+      const answers = data.answers;
+      for (let i = 0; i < answers.length; i++) {
+        const currAnswer = answers[i];
+        for (let j = 0; j < currAnswer.clients.length; j++) {
+          shouldHideInputForm = myName === currAnswer.clients[j];
+          if (shouldHideInputForm) {
+            const form = document.querySelector('#answerInputForm');
+            form.style.display = 'none';
+            break;
+          }
+        }
+      }
       appendAnswers(data.answers);
     });
 
