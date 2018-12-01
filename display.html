@@ -19,14 +19,14 @@
 
   <script>
     const socket = io();
-    let container =  document.getElementById('container');
+    let containerDiv =  document.getElementById('container');
 
     socket.on('onConnection', function (data) {
       socket.emit('onClientRegister', {clientName: 'display'});
     });
 
     socket.on('onNewQuestion', function (data) {
-      container.innerHTML =
+      containerDiv.innerHTML =
       '<div id="question">' + data.triviaObject.q + '</div>' +
       '<div id="answers"></div>';
       if (data.triviaObject.answers !== undefined) {
@@ -78,7 +78,7 @@
 
     socket.on('onShowAnswer', function(data) {
       const answer = data.answer;
-      container.innerHTML = "<div id='answerIs'>The answer is: </div> <br> <div id='answerReveal'>" + answer + "</div>";
+      containerDiv.innerHTML = "<div id='answerIs'>The answer is: </div> <br> <div id='answerReveal'>" + answer + "</div>";
     });
 
     socket.on('onGameEnded', function(data) {
@@ -95,9 +95,9 @@
           winners.push(points[i].name);
         }
       }
-      container.innerHTML = "<div id='winnersTitle'>Winners!</div> <br>"
+      containerDiv.innerHTML = "<div id='winnersTitle'>Winners!</div> <br>"
       for (let i = 0; i < winners.length; i++) {
-        container.innerHTML += "<div id='winnerName'>"+ winners[i] +"</div>";
+        containerDiv.innerHTML += "<div id='winnerName'>"+ winners[i] +"</div>";
       }
     });
   </script>

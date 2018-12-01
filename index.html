@@ -18,11 +18,11 @@
 
   <script>
     const socket = io();
-    let container =  document.getElementById('container');
+    let containerDiv =  document.getElementById('container');
     let myName = undefined;
 
     socket.on('onConnection', function (data) {
-      container.innerHTML =
+      containerDiv.innerHTML =
         '<div id="welcomeMessage">' + data.message + '</div>' + 
         '<form id="nameForm" action="javascript:clientReigster();">' +
           'Enter your name: <br> <input type="text" name="clientName" id="clientNameRegister"> <br>' +
@@ -37,7 +37,7 @@
     }
 
     socket.on('onNewQuestion', function (data) {
-      container.innerHTML =
+      containerDiv.innerHTML =
       '<div id="question">' + data.triviaObject.q + '</div>' +
       '<form id="answerInputForm" action="javascript:submitAnswerFromFormInput();">' +
         'Enter your answer: <br> <input type="text" name="answerInputText" id="answerInputText"> <br>' +

@@ -20,7 +20,7 @@
 
   <script>
     const socket = io();
-    let container =  document.getElementById('container');
+    let containerDiv =  document.getElementById('container');
 
     socket.on('onConnection', function (data) {
       socket.emit('onClientRegister', {clientName: 'admin'});
@@ -29,7 +29,7 @@
     socket.on('onUpdateAdmin', function (data) {
       const numberOfQuestions = data.triviaData.length;
       const currentQuestion = data.currentQuestionNumber;
-      container.innerHTML =
+      containerDiv.innerHTML =
         "Current question: " + currentQuestion +
         '<h4>' + data.triviaData[currentQuestion].q + '</h4>' +
         '<div id="answers"></div>';
@@ -39,7 +39,7 @@
       const questionsDiv = document.createElement('div');
       questionsDiv.id = "questionsDiv";
       questionsDiv.innerHTML = "Select question<br>"
-      container.appendChild(questionsDiv);
+      containerDiv.appendChild(questionsDiv);
       for (let i = 0; i < numberOfQuestions; i++) {
         const questionButton = document.createElement('button');
         questionButton.id = "questionButton";
